@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
+require('dotenv/config');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./routes');
 
-mongoose.connect(
-  'mongodb+srv://user:s7a4u1mfEbVQePLb@cluster0-z7yke.mongodb.net/tindev?retryWrites=true&w=majority',
-  { useNewUrlParser: true }
-);
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
 const server = express();
 
