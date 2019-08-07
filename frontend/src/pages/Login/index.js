@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import './styles.css';
 
+import api from '../../services/api';
+
 import logo from '../../assets/logo.svg';
 
 const Login = ({ history }) => {
   const [username, setUsername] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    history.push('/main');
+    const resp = await api.post('/devs', {
+      username,
+    });
+
+    const { _id: id } = resp.data;
+
+    history.push(`/dev/${id}`);
   };
 
   return (
