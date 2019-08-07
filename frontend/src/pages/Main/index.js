@@ -1,93 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './styles.css';
+
+import api from '../../services/api';
 
 import logo from '../../assets/logo.svg';
 import like from '../../assets/like.svg';
 import dislike from '../../assets/dislike.svg';
 
-const Main = ({ match }) => (
-  <div className="main-container">
-    <img src={logo} alt="Tindev" />
-    <ul>
-      <li>
-        <img
-          src="https://avatars0.githubusercontent.com/u/4248081?v=4"
-          alt=""
-        />
-        <footer>
-          <strong>Filipe Deschamps</strong>
-          <p>Programador e cantor sertanejo nos tempos livres.</p>
-        </footer>
+const Main = ({ match }) => {
+  const [users, setUsers] = useState([]);
 
-        <div className="buttons">
-          <button type="button">
-            <img src={dislike} alt="Dislike" />
-          </button>
-          <button type="button">
-            <img src={like} alt="Like" />
-          </button>
-        </div>
-      </li>
-      <li>
-        <img
-          src="https://avatars0.githubusercontent.com/u/4248081?v=4"
-          alt=""
-        />
-        <footer>
-          <strong>Filipe Deschamps</strong>
-          <p>Programador e cantor sertanejo nos tempos livres.</p>
-        </footer>
+  useEffect(() => {
+    const loadUser = async () => {
+      const resp = await api.get('/devs', {
+        headers: { user: match.params.id },
+      });
 
-        <div className="buttons">
-          <button type="button">
-            <img src={dislike} alt="Dislike" />
-          </button>
-          <button type="button">
-            <img src={like} alt="Like" />
-          </button>
-        </div>
-      </li>
-      <li>
-        <img
-          src="https://avatars0.githubusercontent.com/u/4248081?v=4"
-          alt=""
-        />
-        <footer>
-          <strong>Filipe Deschamps</strong>
-          <p>Programador e cantor sertanejo nos tempos livres.</p>
-        </footer>
+      setUsers(resp.data);
+    };
 
-        <div className="buttons">
-          <button type="button">
-            <img src={dislike} alt="Dislike" />
-          </button>
-          <button type="button">
-            <img src={like} alt="Like" />
-          </button>
-        </div>
-      </li>
-      <li>
-        <img
-          src="https://avatars0.githubusercontent.com/u/4248081?v=4"
-          alt=""
-        />
-        <footer>
-          <strong>Filipe Deschamps</strong>
-          <p>Programador e cantor sertanejo nos tempos livres.</p>
-        </footer>
+    loadUser();
+  }, [match.params.id]);
 
-        <div className="buttons">
-          <button type="button">
-            <img src={dislike} alt="Dislike" />
-          </button>
-          <button type="button">
-            <img src={like} alt="Like" />
-          </button>
-        </div>
-      </li>
-    </ul>
-  </div>
-);
+  return (
+    <div className="main-container">
+      <img src={logo} alt="Tindev" />
+      <ul>
+        {users.map(user => (
+          <li key={user._id}>
+            <img src={user.avatar} alt={user.name} />
+            <footer>
+              <strong>{user.name}</strong>
+              <p>{user.bio}</p>
+            </footer>
+
+            <div className="buttons">
+              <button type="button">
+                <img src={dislike} alt="Dislike" />
+              </button>
+              <button type="button">
+                <img src={like} alt="Like" />
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default Main;
