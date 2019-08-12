@@ -35,7 +35,7 @@ export default function Main({ navigation }) {
   }, [id]);
 
   useEffect(() => {
-    const socket = io('http://localhost:3333', {
+    const socket = io('https://tindev-backend-api.herokuapp.com/', {
       query: { user: id },
     });
 
