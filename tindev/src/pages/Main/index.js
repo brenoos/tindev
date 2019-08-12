@@ -114,7 +114,7 @@ export default function Main({ navigation }) {
       )}
 
       {matchDev && (
-        <View style={styles.matchContainer}>
+        <View style={[styles.matchContainer, { zIndex: users.length + 1 }]}>
           <Image style={styles.matchImage} source={istamatch} />
           <Image
             style={styles.matchAvatar}
