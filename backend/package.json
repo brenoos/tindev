@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "start:prod": "pm2 src/server.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -12,6 +13,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.6.8",
+    "pm2": "^3.5.1",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
